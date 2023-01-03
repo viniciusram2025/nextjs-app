@@ -1,11 +1,29 @@
-//import Head from 'next/head'
+import P from 'prop-types';
+import { mapData } from '../api/map-data';
+import Home from '../templates/Home';
 
-import styled from 'styled-components';
-
-const Heading = styled.h1`
-  background: ${({ theme }) => theme.colors.secondaryColor};
-`;
-
-export default function Home() {
-  return <Heading>Oi</Heading>;
+export default function Index({ data = null }) {
+  return <Home data={data} />;
 }
+
+export const getStaticProps = async () => {
+  const raw = await fetch('http://localhost:1337/api/pages?populate=deep');
+  const json = await raw.json();
+  const { attributes } = json.data[0];
+  const data = mapData([attributes]);
+
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+Index.propTypes = {
+  data: P.array,
+};
+
+/*const json = await data.json();
+const { attributes } = json.data[0];
+const pageData = mapData([attributes]);
+*/

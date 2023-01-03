@@ -20,6 +20,7 @@ export const Grid = styled.div`
         overflow: hidden;
         width: 100%;
 
+
         @media ${theme.media.lteMedium} {
           grid-template-columns: 1fr;
         }
