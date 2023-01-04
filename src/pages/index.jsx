@@ -1,16 +1,25 @@
 import P from 'prop-types';
-import { mapData } from '../api/map-data';
 import Home from '../templates/Home';
+import { loadPages } from '../api/load-pages';
 
 export default function Index({ data = null }) {
   return <Home data={data} />;
 }
 
 export const getStaticProps = async () => {
-  const raw = await fetch('http://localhost:1337/api/pages?populate=deep');
-  const json = await raw.json();
-  const { attributes } = json.data[0];
-  const data = mapData([attributes]);
+  let data;
+
+  try {
+    data = await loadPages();
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!data || !data.length) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {

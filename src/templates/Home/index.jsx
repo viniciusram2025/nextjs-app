@@ -1,11 +1,9 @@
 import P from 'prop-types';
 import Head from 'next/head';
-import { useEffect, useRef, useState } from 'react';
 
 import config from '../../config';
 
 //templates
-import { PageNotFound } from '../PageNotFound';
 import { Base } from '../Base';
 
 //components
@@ -15,10 +13,6 @@ import { GridText } from '../../components/GridText';
 import { GridImage } from '../../components/GridImage';
 
 function Home({ data }) {
-  if (!data || !data.length) {
-    return <PageNotFound />;
-  }
-
   const { menu, sections, footerHtml, slug, title } = data[0];
   const { links, text, link, srcImg } = menu;
 
